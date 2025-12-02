@@ -7,8 +7,25 @@ The main goals are:
 - To understand how neural networks actually work internally (forward pass, backpropagation, optimization).
 - To see how to combine categorical features (via embeddings) and numeric features in a regression model.
 - To build a clean, readable mini-project that can be extended and experimented with.
-
 ---
+
+## 0. How to run?
+
+Make sure to copy this repository using :
+
+/data contains 11 csv files
+/utils contains 3 .py files that implement the dense layers, embedding, and optimizer (explained below)
+
+To recreate the project, run main.ipynb, the notebook containing the following:
+
+- Library/module load
+- Data pre-processing
+- Exploratory data analysis
+- Embedding of categorical variables
+- Set up of the neural network
+- training loop
+- results
+
 
 ## 1. How a Neural Network Works (Conceptual Overview)
 
