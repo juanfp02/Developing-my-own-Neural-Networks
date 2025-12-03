@@ -229,7 +229,7 @@ This logic is implemented in the dense layer class inside `utils/neural_network.
 
 ## 1.8 A nice GIF that summarizes the points above
 
-![Neural Networks functioning](.output/NN_functioning_gif.gif)
+![Neural Networks functioning](output/NN_functioning_gif.gif)
 
 
 ## 2. Project Structure
@@ -243,7 +243,7 @@ The project is organized as follows (focusing on the core logic):
 │   ├── neural_network.py
 │   └── optimizer.py
 └── main.ipynb
-
+```
 
 
 ## 3. Results
