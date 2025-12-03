@@ -11,43 +11,64 @@ The main goals are:
 
 ## 0. How to run?
 
-Make sure to copy this repository using :
+## 0. How to run?
 
-/data contains 11 csv files
-/utils contains 3 .py files that implement the dense layers, embedding, and optimizer (explained below)
+1. **Clone the repository**
 
-To recreate the project, run main.ipynb, the notebook containing the following:
+   ```bash
+   git clone https://github.com/juanfp02/Developing-my-own-Neural-Networks.git
+   cd Developing-my-own-Neural-Networks
+   ```
 
-- Library/module load
-- Data pre-processing
-- Exploratory data analysis
-- Embedding of categorical variables
-- Set up of the neural network
-- training loop
-- results
+2. **Create and activate a virtual environment**
+
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate      # macOS / Linux
+   # .venv\Scripts\activate       # Windows
+   ```
+
+3. **Install dependencies**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Project layout**
+
+   - `data/` – contains the CSV files (11 manufacturers)
+   - `utils/` – implements neural network layers, embeddings, metrics, optimizer
+   - `output/` – generated plots
+   - `main.ipynb` – full training notebook
+   - `README.md` – this file
+
+5. **Run the notebook**
+
+   ```bash
+   jupyter notebook
+   ```
+
+Run all cells inside `main.ipynb` from top to bottom.
 
 
 ## 1. How a Neural Network Works (Conceptual Overview)
 
-At a high level, a neural network is a function that maps inputs (features) to outputs (predictions) using a stack of simple, differentiable operations.
+A neural network maps inputs to outputs through differentiable layers.
 
-In this project, the network:
+In this project, it takes:
 
-- Takes in car features (model, brand, transmission, fuel type, year, mileage, tax, mpg, engine size).
-- Produces a single number: the predicted price (in british pounds).
+- **Features:** model, brand, transmission, fuel type, year, mileage, tax, mpg, engine size  
+- **Output:** predicted price in British pounds
 
-The core pieces are:
+Core components:
 
-- **Dense (fully connected) layers**
-- **Activation functions**
-- **Loss function**
-- **Forward pass**
-- **Backpropagation**
-- **Optimizer (Adam)**
-- **L2 regularization**
-
-Each of these shows up in the `utils` folder and in `main.ipynb`.
-
+- Dense layers  
+- Activation functions  
+- Loss function  
+- Forward pass  
+- Backpropagation  
+- Optimizer (Adam)  
+- L2 regularization  
 ---
 
 ### 1.1 Dense Layer
@@ -103,6 +124,11 @@ In the code:
 - The final output layer is left linear (no activation), which is standard for regression problems.
 
 Activations are also implemented in `utils/neural_network.py`.
+
+<p align="center">
+  <img src="output/RELU_function.png" alt="RELU function" width="500">
+</p>
+
 
 ---
 
@@ -225,6 +251,9 @@ In this project:
 
 This logic is implemented in the dense layer class inside `utils/neural_network.py`.
 
+![Lasso vs Ridge regularization](output/lasso_vs_ridge_reg.png)
+
+
 ---
 
 ## 1.8 A nice GIF that summarizes the points above
@@ -236,34 +265,120 @@ This logic is implemented in the dense layer class inside `utils/neural_network.
 
 The project is organized as follows (focusing on the core logic):
 
-```text
+
+## 2. Project Structure
+
+```
 .
-├── utils
+├── data/
+│   └── ...
+├── output/
+│   ├── distribution_of_car_prices.png
+│   ├── distribution_of_numeric_features.png
+│   ├── Mean_absolute_error_per_brand.png
+│   ├── Neural_Networks_Architecture.png
+│   ├── predicted_vs_actual_prices.png
+│   ├── price_vs_numeric_features.png
+│   ├── prices_vs_car_brand.png
+│   ├── prices_vs_fuel_type.png
+│   ├── prices_vs_transmission_type.png
+│   └── training_loss_over_epochs.png
+├── utils/
 │   ├── functions.py
 │   ├── neural_network.py
 │   └── optimizer.py
-└── main.ipynb
+├── main.ipynb
+├── requirements.txt
+└── README.md
 ```
+---
 
+## 3. Dataset
 
-## 3. Results
+Data from Kaggle:
 
-Running this pipeline, we obtain that our Neural Network tends to miss the price of an used car, given the model, brand, transmission, fuel type, year, mileage, tax, mpg, engine size, by about 1000 GBP or 7% in absolute terms.
+https://www.kaggle.com/datasets/adityadesai13/used-car-dataset-ford-and-mercedes/data?select=vw.csv
+
+**Columns:**
+
+- model, transmission, fuelType, car_brand  
+- year, mileage, tax, mpg, engineSize  
+- price  
+
+---
+## 4. Exploratory Data Analysis (EDA)
+
+### 4.1 Price distribution
 
 <p align="center">
-  <img src="output/distribution_of_car_prices.png" alt="Distribution of used car prices" width="500">
+  <img src="output/distribution_of_car_prices.png" width="500">
 </p>
 
+### 4.2 Numeric feature distributions
 
 <p align="center">
-  <img src="output/training_loss_over_epochs.png" alt="Training loss of the Neural Network" width="500">
+  <img src="output/distribution_of_numeric_features.png" width="500">
 </p>
+
+### 4.3 Price vs numeric features
 
 <p align="center">
-  <img src="output/predicted_vs_actual_prices.png" alt="Predicted vs actual prices" width="500">
+  <img src="output/price_vs_numeric_features.png" width="500">
 </p>
+
+### 4.4 Price vs categorical features
+
+Brand:
 
 <p align="center">
-  <img src="output/Mean_absolute_error_per_brand.png" alt="Average error per brand" width="500">
+  <img src="output/prices_vs_car_brand.png" width="500">
 </p>
 
+Fuel type:
+
+<p align="center">
+  <img src="output/prices_vs_fuel_type.png" width="500">
+</p>
+
+Transmission:
+
+<p align="center">
+  <img src="output/prices_vs_transmission_type.png" width="500">
+</p>
+
+---
+
+## 5. Model Training and Evaluation
+
+### 5.1 Training loss over epochs
+
+<p align="center">
+  <img src="output/training_loss_over_epochs.png" width="500">
+</p>
+
+### 5.2 Predicted vs actual prices
+
+<p align="center">
+  <img src="output/predicted_vs_actual_prices.png" width="500">
+</p>
+
+---
+
+## 6. Error Analysis
+
+### 6.1 MAE per brand
+
+<p align="center">
+  <img src="output/Mean_absolute_error_per_brand.png" width="500">
+</p>
+
+---
+
+## 7. Results
+
+The neural network typically misses the true used car price by:
+
+- **≈ £1000**  
+- **≈ 7% MAPE**
+
+---
