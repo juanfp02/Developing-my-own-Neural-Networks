@@ -56,15 +56,14 @@ A **dense layer** (also called a fully connected layer) is the basic building bl
 
 Mathematically:
 
-\[
-\text{output} = XW + b
-\]
+
+$$\text{output} = XW + b$$
 
 Where:
 
-- \(X\) is the input matrix: shape `(batch_size, n_inputs)`.
-- \(W\) is the weight matrix: shape `(n_inputs, n_neurons)`.
-- \(b\) is the bias vector: shape `(1, n_neurons)`.
+- $X$ is the input matrix: shape `(batch_size, n_inputs)`.
+- $W$ is the weight matrix: shape `(n_inputs, n_neurons)`.
+- $b$ is the bias vector: shape `(1, n_neurons)`.
 - `output` is shape `(batch_size, n_neurons)`.
 
 Each neuron computes a weighted sum of its inputs plus a bias. In code, this is implemented via matrix multiplication (`np.dot` / `@`) and a broadcasted addition of biases.
@@ -75,6 +74,10 @@ In this project, dense layers are defined in `utils/neural_network.py` and used 
 2. Hidden representation → next hidden layer.
 3. Final hidden layer → single output neuron (predicted price).
 
+<p align="center">
+  <img src="output/Neural_Networks_Architecture.png" alt="Neural Network Architecture" width="500">
+</p>
+
 ---
 
 ### 1.2 Activation Function
@@ -83,9 +86,9 @@ If we stack only linear (dense) layers, the entire network is still just a big l
 
 Here we use **ReLU (Rectified Linear Unit)**:
 
-\[
+$$
 \text{ReLU}(x) = \max(0, x)
-\]
+$$
 
 Properties:
 
@@ -109,16 +112,16 @@ The **loss function** measures how good (or bad) a prediction is. During trainin
 
 For regression, we use **Mean Squared Error (MSE)**:
 
-\[
+$$
 \text{MSE}(y_{\text{pred}}, y_{\text{true}}) =
 \frac{1}{N} \sum_{i=1}^N (y_{\text{pred}, i} - y_{\text{true}, i})^2
-\]
+$$
 
 Where:
 
-- \(y_{\text{pred}}\) are the predicted prices.
-- \(y_{\text{true}}\) are the actual prices.
-- \(N\) is the number of samples in the batch.
+- $y_{\text{pred}}$ are the predicted prices.
+- $y_{\text{true}}$ are the actual prices.
+- $N$ is the number of samples in the batch.
 
 MSE penalizes large errors more strongly than small ones, which is often useful for regression tasks like price prediction.
 
@@ -177,14 +180,14 @@ Once gradients are computed via backpropagation, we need a way to **update param
 
 The simplest optimizer is **Stochastic Gradient Descent (SGD)**:
 
-\[
+$$
 \theta \leftarrow \theta - \eta \cdot \nabla_{\theta} \text{loss}
-\]
+$$
 
 Where:
 
-- \(\theta\) are the parameters (weights, biases, embeddings).
-- \(\eta\) is the learning rate.
+- $\theta$ are the parameters (weights, biases, embeddings).
+- $\eta$ is the learning rate.
 
 In this project, we use **Adam** (Adaptive Moment Estimation), which is a more advanced optimizer that:
 
@@ -200,14 +203,14 @@ Adam is implemented in `utils/optimizer.py` as `Optimizer_Adam` and is called ex
 
 **L2 regularization** (also known as weight decay) adds a penalty term to the loss that depends on the squared magnitude of the weights:
 
-\[
+$$
 \text{Loss}_{\text{total}} = \text{Loss}_{\text{data}} + \lambda \sum_{i} W_i^2
-\]
+$$
 
 Where:
 
-- \(\lambda\) is the regularization strength.
-- \(W_i\) are individual weights.
+- $\lambda$ is the regularization strength.
+- $W_i$ are individual weights.
 
 Why use L2?
 
@@ -223,6 +226,11 @@ In this project:
 This logic is implemented in the dense layer class inside `utils/neural_network.py`.
 
 ---
+
+## 1.8 A nice GIF that summarizes the points above
+
+![Neural Networks functioning](.output/NN_functioning_gif.gif)
+
 
 ## 2. Project Structure
 
@@ -241,4 +249,21 @@ The project is organized as follows (focusing on the core logic):
 ## 3. Results
 
 Running this pipeline, we obtain that our Neural Network tends to miss the price of an used car, given the model, brand, transmission, fuel type, year, mileage, tax, mpg, engine size, by about 1000 GBP or 7% in absolute terms.
+
+<p align="center">
+  <img src="output/distribution_of_car_prices.png" alt="Distribution of used car prices" width="500">
+</p>
+
+
+<p align="center">
+  <img src="output/training_loss_over_epochs.png" alt="Training loss of the Neural Network" width="500">
+</p>
+
+<p align="center">
+  <img src="output/predicted_vs_actual_prices.png" alt="Predicted vs actual prices" width="500">
+</p>
+
+<p align="center">
+  <img src="output/Mean_absolute_error_per_brand.png" alt="Average error per brand" width="500">
+</p>
 
